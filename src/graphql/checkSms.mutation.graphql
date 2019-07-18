@@ -1,0 +1,5 @@
+mutation createMealplan($mealplan: MealplanInput!) {
+  createMealplan(mealplan: $mealplan) {
+    id
+  }
+}

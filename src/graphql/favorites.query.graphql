@@ -1,0 +1,14 @@
+query getCategories ($text: String, $pagination: PaginationInput = { first: 5 }) {
+  categories (text: $text, pagination: $pagination) {
+    edges {
+      node {
+        id
+        category
+        text
+      }
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+}

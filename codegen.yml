@@ -1,0 +1,16 @@
+schema: https://ddapi.staging.dietdoctor.com/v1
+documents: ./src/graphql/**/*.graphql
+config: {}
+generates:
+  ./src/models/index.tsx:
+    config:
+      avoidOptionals: false
+      immutableTypes: false
+      skipTypename: true
+      namingConvention: keep
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+require: []
+overwrite: true

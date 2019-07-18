@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "gen": "npx gql-gen"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.6.2",
@@ -33,22 +34,28 @@
     "react-native-paper": "^2.16.0",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.1",
+    "react-navigation-redux-helpers": "^3.0.2",
+    "react-navigation-slide-from-right-transition": "^1.0.4",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
+    "seamless-immutable": "^7.1.4",
     "subscriptions-transport-ws": "^0.9.16",
+    "view-on-steroids": "^1.6.4",
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.4.0",
+    "@graphql-codegen/typescript": "^1.4.0",
+    "@graphql-codegen/typescript-operations": "^1.4.0",
+    "@graphql-codegen/typescript-react-apollo": "^1.4.0",
     "@types/graphql": "^14.2.2",
     "@types/react": "^16.8.19",
     "@types/react-native": "^0.57.60",
     "@types/yup": "^0.26.22",
     "babel-preset-expo": "^5.1.1",
-    "graphql-code-generator": "^0.18.2",
-    "graphql-codegen-typescript-react-apollo-template": "^0.18.2",
     "tslint": "^5.18.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.4.5"

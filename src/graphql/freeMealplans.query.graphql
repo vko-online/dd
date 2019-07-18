@@ -1,0 +1,15 @@
+query freeMealplans ($page: Int, $perPage: Int, $modifiedAfter: Time) {
+  freeMealplans (page: $page, perPage: $perPage, modifiedAfter: $modifiedAfter) {
+    id
+    userAuthor
+    title
+    createdAt
+    description
+    type
+    tags {
+      id
+      title
+      type
+    }
+  }
+}

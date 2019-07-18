@@ -1,0 +1,9 @@
+{
+  "includes": ["./src/graphql/*.graphql"],
+  "excludes": ["./src/models/index.tsx"],
+  "extensions": {
+    "endpoints": {
+      "dev": "https://ddapi.staging.dietdoctor.com/v1"
+    }
+  }
+}
