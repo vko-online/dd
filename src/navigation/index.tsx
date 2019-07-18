@@ -20,6 +20,7 @@ import Drawer from './drawer'
 import { LOGOUT } from '../constants/actionTypes'
 import Auth from '../screens/auth'
 import Home from '../screens/home'
+import Intro from '../screens/intro'
 // import Profile from '../screens/profile'
 // import Login from '../screens/login'
 // import Reviews from '../screens/reviews'
@@ -73,7 +74,8 @@ const DrawerNavigator = createDrawerNavigator({
 })
 
 const AppNavigator = createStackNavigator({
-  Screen: Auth,
+  Intro,
+  Auth,
   Drawer: DrawerNavigator
 }, {
   headerMode: 'none',

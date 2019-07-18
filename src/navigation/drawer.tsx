@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
+import { Image } from 'react-native'
 import {
   DrawerItemsProps
 } from 'react-navigation'
-import { Avatar, Drawer, Subheading, Caption, Divider, Dialog, Portal, Button, Paragraph } from 'react-native-paper'
+import { Avatar, Text, Drawer, Subheading, Caption, Divider, Dialog, Portal, Button, Paragraph } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { Scene, Hpane, Vpane } from 'view-on-steroids'
 
@@ -32,6 +33,7 @@ class DrawerComponent extends PureComponent<Props, State> {
       navigation,
       auth
     } = this.props
+    console.log('auth', auth)
     const { visible } = this.state
     const parentRoute = navigation.state.routes[navigation.state.index]
     const { routeName } = parentRoute.routes[parentRoute.index]
@@ -49,9 +51,9 @@ class DrawerComponent extends PureComponent<Props, State> {
           )
         }
         <Drawer.Section>
-          <Drawer.Item active={routeName === 'MyFavorites'} label='My favorites' icon='library-books' onPress={() => navigation.navigate('MyFavorites')} />
-          <Drawer.Item active={routeName === 'MealPlanner'} label='Meal planner' icon='list' onPress={() => navigation.navigate('MealPlanner')} />
-          <Drawer.Item active={routeName === 'MyAccount'} label='My account' icon='credit-card' onPress={() => navigation.navigate('MyAccount')} />
+          <Drawer.Item active={routeName === 'MyFavorites'} label='My favorites' icon='favorite' onPress={() => navigation.navigate('MyFavorites')} />
+          <Drawer.Item active={routeName === 'MealPlanner'} label='Meal planner' icon='date-range' onPress={() => navigation.navigate('MealPlanner')} />
+          <Drawer.Item active={routeName === 'MyAccount'} label='My account' icon='account-circle' onPress={() => navigation.navigate('MyAccount')} />
         </Drawer.Section>
         <Drawer.Item label='Low carbo & keto' />
         <Drawer.Item label='Recipes' />
@@ -63,14 +65,15 @@ class DrawerComponent extends PureComponent<Props, State> {
         <Portal>
           <Dialog
              visible={visible}
+             style={{ backgroundColor: '#fff' }}
              onDismiss={this.hideDialog}>
-            <Dialog.Title>Выход из приложения</Dialog.Title>
+            <Dialog.Title>Exit</Dialog.Title>
             <Dialog.Content>
-              <Paragraph>Вы действительно хотите выйти из текущего профиля</Paragraph>
+              <Text>Are you sure you want to logout?</Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button mode='text' onPress={this.hideDialog}>Отмена</Button>
-              <Button mode='text' onPress={this.handleSignOut}>Выйти</Button>
+              <Button mode='text' onPress={this.hideDialog}>Cancel</Button>
+              <Button mode='text' onPress={this.handleSignOut}>Logout</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

@@ -17,18 +17,20 @@ import { persistStore, persistCombineReducers } from 'redux-persist'
 import ReduxStorage from 'redux-persist/es/storage'
 import thunk from 'redux-thunk'
 import { setContext } from 'apollo-link-context'
-import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper'
-import { Font, AppLoading } from 'expo'
+import { Provider as PaperProvider, DefaultTheme, Theme } from 'react-native-paper'
+import { AppLoading } from 'expo'
+import * as Font from 'expo-font'
 import { createApolloFetch } from 'apollo-fetch'
 import createSagaMiddleware from 'redux-saga'
 
 YellowBox.ignoreWarnings(['Require cycle'])
 
-import AppNavigator, { navReducer, navMiddleware } from './src/navigation'
-
-import auth from './src/reducers/auth'
-import { logout } from './src/actions/auth'
-import sagas from './src/sagas'
+import AppNavigator, { navReducer, navMiddleware } from 'src/navigation'
+import auth from 'src/reducers/auth'
+import intro from 'src/reducers/intro'
+import { logout } from 'src/actions/auth'
+import sagas from 'src/sagas'
+import { primary, theme } from 'src/theme'
 
 const REMOTE_HOST = 'ddapi.staging.dietdoctor.com/v1'
 export const URL = `https://${REMOTE_HOST}` // set your comp's url here
@@ -42,6 +44,7 @@ const config = {
 const reducer = persistCombineReducers<any>(config, {
   apollo: apolloReducer,
   auth,
+  intro,
   nav: navReducer
 })
 
@@ -131,19 +134,6 @@ export const client = new ApolloClient({
   cache
 })
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    primary: '#404040'
-  },
-  fonts: {
-    regular: 'diet-doctor-sans-regular',
-    medium: 'diet-doctor-sans-medium',
-    light: 'diet-doctor-sans-regular',
-    thin: 'diet-doctor-sans-regular'
-  }
-}
-
 interface Props {}
 interface State {
   isReady: boolean
@@ -181,7 +171,7 @@ export default class App extends Component<Props, State> {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <PaperProvider theme={theme}>
-              <StatusBar animated backgroundColor='#404040' barStyle='light-content' />
+              <StatusBar animated backgroundColor={primary} barStyle='light-content' />
               <AppNavigator />
             </PaperProvider>
           </PersistGate>
