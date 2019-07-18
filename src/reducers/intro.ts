@@ -1,7 +1,7 @@
 import { REHYDRATE } from 'redux-persist/es/constants'
 import Immutable from 'seamless-immutable'
 
-import { LOGOUT, INTRO_COMPLETED } from '../constants/actionTypes'
+import { LOGOUT, INTRO_COMPLETED, SHOW_INTRO } from '../constants/actionTypes'
 
 const initialState = Immutable(false)
 
@@ -14,6 +14,8 @@ const intro = (state = initialState, action: any) => {
       return Immutable(state)
     case INTRO_COMPLETED:
       return Immutable(true)
+    case SHOW_INTRO:
+      return Immutable(false)
     case LOGOUT:
       return Immutable(false)
     default:

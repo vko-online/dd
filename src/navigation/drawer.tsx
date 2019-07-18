@@ -28,28 +28,43 @@ class DrawerComponent extends PureComponent<Props, State> {
     this.hideDialog()
     logout()
   }
+  renderUser = () => {
+    const {
+      navigation,
+      auth
+    } = this.props
+    if (auth) {
+      return (
+        <Hpane padding={20} justifyContent='flex-start' alignItems='center'>
+          <Avatar.Image source={{ uri: auth.photoURL, cache: 'force-cache' }} />
+          <Vpane marginLeft={20}>
+            <Subheading>{auth.displayName}</Subheading>
+            <Caption>{auth.phoneNumber}</Caption>
+          </Vpane>
+        </Hpane>
+      )
+    }
+    return (
+      <Hpane padding={20} justifyContent='flex-start' alignItems='center'>
+        <Avatar.Icon icon='account-circle' />
+        <Vpane marginLeft={20}>
+          <Subheading>Not Authenticated</Subheading>
+          <Caption>Please log in</Caption>
+        </Vpane>
+      </Hpane>
+    )
+  }
   render () {
     const {
       navigation,
       auth
     } = this.props
-    console.log('auth', auth)
     const { visible } = this.state
     const parentRoute = navigation.state.routes[navigation.state.index]
     const { routeName } = parentRoute.routes[parentRoute.index]
     return (
       <Scene paddingTop={30}>
-        {
-          auth && (
-            <Hpane padding={20} justifyContent='flex-start' alignItems='center'>
-              <Avatar.Image source={{ uri: auth.photoURL, cache: 'force-cache' }} />
-              <Vpane marginLeft={20}>
-                <Subheading>{auth.displayName}</Subheading>
-                <Caption>{auth.phoneNumber}</Caption>
-              </Vpane>
-            </Hpane>
-          )
-        }
+        {this.renderUser()}
         <Drawer.Section>
           <Drawer.Item active={routeName === 'MyFavorites'} label='My favorites' icon='favorite' onPress={() => navigation.navigate('MyFavorites')} />
           <Drawer.Item active={routeName === 'MealPlanner'} label='Meal planner' icon='date-range' onPress={() => navigation.navigate('MealPlanner')} />

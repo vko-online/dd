@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView
 } from 'react-native'
 import {
@@ -15,9 +16,13 @@ import {
 } from 'react-native-paper'
 import { Scene, Vpane, Footer } from 'view-on-steroids'
 import { NavigationScreenProp } from 'react-navigation'
+import { connect } from 'react-redux'
+
 import { primary, secondary } from 'src/theme'
+import { showIntro } from 'src/actions/intro'
 
 interface Props {
+  onIntro: () => void
   navigation: NavigationScreenProp<any, any>
 }
 interface State {}
@@ -28,7 +33,9 @@ class Screen extends PureComponent<Props, State> {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
         <Scene paddingHorizontal={20} paddingTop={50} paddingBottom={20}>
           <Vpane alignItems='center' paddingVertical={20}>
-            <Image source={require('../../assets/icon.png')} style={s.logo} />
+            <TouchableWithoutFeedback onPress={() => this.props.onIntro()}>
+              <Image source={require('../../assets/icon.png')} style={s.logo} />
+            </TouchableWithoutFeedback>
             <Title>Diet Doctor</Title>
           </Vpane>
           <Text style={s.headline}>Low carb and keto made simple</Text>
@@ -124,4 +131,8 @@ const s = StyleSheet.create({
   }
 })
 
-export default Screen
+const actions = dispatch => ({
+  onIntro: () => dispatch(showIntro())
+})
+
+export default connect(null, actions)(Screen)
