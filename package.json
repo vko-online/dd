@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "gen": "npx gql-gen"
+    "gen": "npx gql-gen",
+    "pull": "ts-node ./pull"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.6.2",
@@ -64,7 +65,8 @@
     "babel-preset-expo": "^5.1.1",
     "tslint": "^5.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "x-ray": "^2.3.4"
   },
   "private": true
 }

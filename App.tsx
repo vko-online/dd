@@ -37,6 +37,7 @@ export const URL = `https://${REMOTE_HOST}` // set your comp's url here
 
 const config = {
   key: 'root',
+  version: 2,
   storage: ReduxStorage,
   blacklist: ['nav', 'apollo'] // don't persist nav for now
 }

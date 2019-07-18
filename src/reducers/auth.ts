@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable'
 
 import { LOGOUT, SET_CURRENT_USER } from '../constants/actionTypes'
 
-const initialState = Immutable({}) // null
+const initialState = Immutable({ jwt: 1 }) // null
 
 const auth = (state = initialState, action: any) => {
   switch (action.type) {

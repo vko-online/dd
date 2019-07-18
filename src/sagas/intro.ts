@@ -6,9 +6,7 @@ import { get } from 'lodash'
 import { SHOW_INTRO } from 'src/constants/actionTypes'
 
 function* getIntro (action) {
-  console.log('action', action)
   const intro = get(action, 'payload.intro', false)
-  console.log('intro', intro)
   if (!intro) {
     yield put(NavigationActions.navigate({ routeName: 'Intro' }))
   }

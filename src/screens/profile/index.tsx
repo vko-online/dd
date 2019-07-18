@@ -25,16 +25,6 @@ import { primary, secondary } from 'src/theme'
 
 const radius = 10
 
-const colors = [
-  '#3A86FF',
-  '#E07A5F',
-  '#C3BEF7',
-  '#444444',
-  '#E2EB98',
-  '#F18701',
-  '#81B29A'
-]
-
 interface Props {
   navigation: NavigationScreenProp<any, any>
 }
@@ -71,7 +61,13 @@ class Screen extends PureComponent<Props> {
     return (
       <Scene backgroundColor='#F3F2F9'>
         <View style={s.content}>
-          <Subheading style={[s.subheading, { color: colors[0] }]}>LOW CARB</Subheading>
+          <Hpane alignItems='flex-end'>
+            <Headline style={s.headline}>Today's meal</Headline>
+            <TouchableOpacity style={s.action}>
+              <Text style={s.actionText}>Edit</Text>
+              <MaterialIcons name='navigate-next' color='#aaa' size={22} />
+            </TouchableOpacity>
+          </Hpane>
           <FlatList
             data={['Breakfast', 'Lunch', 'Dinner']}
             renderItem={this.renderItem}
@@ -82,27 +78,26 @@ class Screen extends PureComponent<Props> {
             contentContainerStyle={{ height: 186 }}
           />
         </View>
-        <View style={s.content}>
-          <Subheading style={[s.subheading, { color: colors[1] }]}>KETO</Subheading>
-          <FlatList
-            data={['Breakfast', 'Lunch', 'Dinner']}
-            renderItem={this.renderItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => `key-${index}`}
-            style={s.list}
-            contentContainerStyle={{ height: 186 }}
-          />
-        </View>
+        <Hpane alignItems='flex-end'>
+          <Headline style={s.headline}>Progress last week</Headline>
+          <TouchableOpacity style={s.action}>
+            <Text style={s.actionText}>Current</Text>
+            <MaterialIcons name='navigate-next' color='#aaa' size={22} />
+          </TouchableOpacity>
+        </Hpane>
+        <FAB
+          style={s.fab}
+          icon='add'
+          color={primary}
+          onPress={() => console.log('Pressed')}
+        />
       </Scene>
     )
   }
 }
 
 const s = StyleSheet.create({
-  subheading: {
-    fontSize: 14,
-    fontFamily: 'diet-doctor-sans-medium',
+  headline: {
     marginHorizontal: 10
   },
   surface: {

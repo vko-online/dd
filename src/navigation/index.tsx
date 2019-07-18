@@ -92,6 +92,7 @@ export const navReducer = (state = initialNavState, action: Action<any>) => {
     case REHYDRATE:
       try {
         const jwt = get(action, 'payload.auth.jwt', false)
+        console.log('action', action)
         if (!jwt) {
           const { routes, index } = state
           if (routes[index].routeName !== 'Auth') {
