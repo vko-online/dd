@@ -19,7 +19,7 @@ x(
       title: 'h5',
       image: 'img@src',
       type: 'span',
-      description: 'p'
+      description: 'p@'
     }])
   }
 )((err, data) => {
@@ -31,11 +31,11 @@ x(
     const items = data.items.slice(before, after)
     all.push({
       title,
-      items
+      data: items
     })
     return all
   }, [])
-  const file = path.join(__dirname, 'src', 'data.json')
+  const file = path.join(__dirname, 'src', '_data.json')
   fs.writeFile(file, JSON.stringify(items, null, 4), function (err) {
     if (err) throw err
     console.log('Done')

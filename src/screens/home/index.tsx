@@ -3,27 +3,22 @@ import {
   View,
   StyleSheet,
   FlatList,
-  Image,
-  TouchableOpacity
+  ScrollView,
+  Modal
 } from 'react-native'
 import {
-  Headline,
-  Title,
   Text,
-  FAB,
   Appbar,
-  Avatar,
   Card,
-  Surface,
-  Button,
-  Subheading
+  Subheading,
+  Paragraph,
+  Searchbar,
+  Portal
 } from 'react-native-paper'
-import Pane, { Scene, Hpane } from 'view-on-steroids'
+import { Scene } from 'view-on-steroids'
 import { NavigationScreenProp } from 'react-navigation'
-import { MaterialIcons } from '@expo/vector-icons'
-import { primary, secondary } from 'src/theme'
-
-const radius = 10
+import { get, noop } from 'lodash'
+import { data, Item } from 'src/data'
 
 const colors = [
   '#3A86FF',
@@ -35,111 +30,141 @@ const colors = [
   '#81B29A'
 ]
 
+const typeColors = {
+  'Guide': '#6e86ae',
+  'Recipe collection': '#f086a4',
+  'Video': '#e73568',
+  'Success story': '#f3aec3'
+}
+
+interface RenderItem { item: Item, index: number }
 interface Props {
   navigation: NavigationScreenProp<any, any>
 }
-class Screen extends PureComponent<Props> {
+interface State {
+  searchVisible: boolean
+  searchText?: string
+}
+class Screen extends PureComponent<Props, State> {
   static navigationOptions = {
-    header: ({ scene, navigation }) => (
-      <Appbar.Header>
-        <Appbar.Action icon='menu' onPress={navigation.openDrawer} />
-        <Appbar.Content title='Dashboard' subtitle='Welcome back, Medet' />
-        <View />
-        <Avatar.Image
-          style={{ marginRight: 10 }}
-          source={require('src/assets/images/avatar.jpeg')}
-          size={40}
-        />
-      </Appbar.Header>
-    )
+    header: ({ scene, navigation }) => {
+      const action = get(scene, 'route.params.openSearch', noop)
+      return (
+        <Appbar.Header>
+          <Appbar.Action icon='menu' onPress={navigation.openDrawer} />
+          <Appbar.Content title='Diet Doctor' subtitle='Welcome back, Medet' />
+          <View />
+          <Appbar.Action icon='search' onPress={action} />
+          <Appbar.Action icon='add' />
+          {/* <Avatar.Image
+            style={{ marginRight: 10 }}
+            source={require('src/assets/images/avatar.jpeg')}
+            size={40}
+          /> */}
+        </Appbar.Header>
+      )
+    }
+  }
+  state: State = {
+    searchVisible: false
   }
 
-  renderItem = ({ item }) => (
-    <Surface style={s.surface}>
-      <View style={s.cover}>
-        <Image
-          source={{ uri: 'https://picsum.photos/700', cache: 'force-cache' }}
-          style={{ width: 120, height: 120 }}
+  componentDidMount () {
+    this.props.navigation.setParams({
+      openSearch: this.openSearch
+    })
+  }
+
+  openSearch = () => this.setState({ searchVisible: true })
+  closeSearch = () => this.setState({ searchVisible: false })
+
+  renderItem = ({ item, index }: RenderItem) => (
+    <Card style={s.card}>
+      <Card.Cover source={{ uri: item.image }} style={s.image} />
+      <Card.Content>
+        <Card.Title
+          title={item.title}
+          titleStyle={{ fontSize: 15, marginLeft: -17 }}
+          style={{ height: 35 }}
         />
-      </View>
-      <Pane justifyContent='center' alignItems='center' paddingVertical={10}>
-        <Subheading>{item}</Subheading>
-      </Pane>
-    </Surface>
+        <Paragraph numberOfLines={2}>
+          {item.type && (
+              <Text style={[s.type, { backgroundColor: typeColors[item.type] }]}>
+                {` ${item.type.toUpperCase()} `}
+              </Text>
+          )}
+          {' ' + item.description}
+        </Paragraph>
+      </Card.Content>
+    </Card>
   )
+
   render () {
+    const { searchVisible, searchText } = this.state
     return (
       <Scene backgroundColor='#F3F2F9'>
-        <View style={s.content}>
-          <Subheading style={[s.subheading, { color: colors[0] }]}>LOW CARB</Subheading>
-          <FlatList
-            data={['Breakfast', 'Lunch', 'Dinner']}
-            renderItem={this.renderItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => `key-${index}`}
-            style={s.list}
-            contentContainerStyle={{ height: 186 }}
-          />
-        </View>
-        <View style={s.content}>
-          <Subheading style={[s.subheading, { color: colors[1] }]}>KETO</Subheading>
-          <FlatList
-            data={['Breakfast', 'Lunch', 'Dinner']}
-            renderItem={this.renderItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => `key-${index}`}
-            style={s.list}
-            contentContainerStyle={{ height: 186 }}
-          />
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {
+            data.map((item, index) => (
+              <View style={s.content} key={index}>
+                <Subheading style={[s.subheading, { color: colors[index] }]}>{item.title.toUpperCase()}</Subheading>
+                <FlatList
+                  data={item.data}
+                  keyExtractor={(item, index) => `key-${index}`}
+                  renderItem={this.renderItem}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  style={s.list}
+                />
+              </View>
+            ))
+          }
+        </ScrollView>
+        <Portal>
+          <Modal animated animationType='slide' visible={searchVisible} onDismiss={this.closeSearch}>
+            <Scene backgroundColor='#fff'>
+              <Appbar.Header>
+                <Searchbar
+                  placeholder='Search mealplan, recipe, ingredient'
+                  value={searchText}
+                  autoFocus
+                  style={{ flexShrink: 1 }}
+                  onChangeText={(searchText) => this.setState({ searchText })}
+                />
+                <Appbar.Action icon='close' onPress={this.closeSearch} />
+              </Appbar.Header>
+            </Scene>
+          </Modal>
+        </Portal>
       </Scene>
     )
   }
 }
 
 const s = StyleSheet.create({
+  type: {
+    fontSize: 12,
+    fontFamily: 'diet-doctor-sans-medium',
+    color: '#fff'
+  },
+  list: {
+    paddingHorizontal: 10
+  },
   subheading: {
     fontSize: 14,
     fontFamily: 'diet-doctor-sans-medium',
     marginHorizontal: 10
   },
-  surface: {
-    margin: 10,
-    elevation: 9,
-    borderRadius: radius
+  card: {
+    width: 250,
+    margin: 5
   },
-  cover: {
-    borderTopLeftRadius: radius,
-    borderTopRightRadius: radius,
-    overflow: 'hidden'
-  },
-  action: {
-    padding: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
-  },
-  actionText: {
-    fontSize: 16,
-    fontFamily: 'diet-doctor-sans-regular',
-    color: '#3e8fe8'
+  image: {
+    width: 250,
+    height: 150
   },
   content: {
-    marginTop: 30,
-    height: 250
-  },
-  list: {
-    height: 150,
-    paddingHorizontal: 10
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#fff'
+    marginTop: 30
   }
 })
 
