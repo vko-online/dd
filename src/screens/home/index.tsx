@@ -3,22 +3,22 @@ import {
   View,
   StyleSheet,
   FlatList,
-  ScrollView,
-  Modal
+  ScrollView
 } from 'react-native'
 import {
   Text,
   Appbar,
   Card,
   Subheading,
-  Paragraph,
-  Searchbar,
-  Portal
+  Paragraph
 } from 'react-native-paper'
+import { MaterialIcons } from '@expo/vector-icons'
 import { Scene } from 'view-on-steroids'
 import { NavigationScreenProp } from 'react-navigation'
 import { get, noop } from 'lodash'
 import { data, Item } from 'src/data'
+
+import Modal from './search'
 
 const colors = [
   '#3A86FF',
@@ -120,22 +120,11 @@ class Screen extends PureComponent<Props, State> {
             ))
           }
         </ScrollView>
-        <Portal>
-          <Modal animated animationType='slide' visible={searchVisible} onDismiss={this.closeSearch}>
-            <Scene backgroundColor='#fff'>
-              <Appbar.Header>
-                <Searchbar
-                  placeholder='Search mealplan, recipe, ingredient'
-                  value={searchText}
-                  autoFocus
-                  style={{ flexShrink: 1 }}
-                  onChangeText={(searchText) => this.setState({ searchText })}
-                />
-                <Appbar.Action icon='close' onPress={this.closeSearch} />
-              </Appbar.Header>
-            </Scene>
-          </Modal>
-        </Portal>
+        <Modal
+          onDismiss={this.closeSearch}
+          searchVisible={searchVisible}
+          searchText={searchText}
+        />
       </Scene>
     )
   }
