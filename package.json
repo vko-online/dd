@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "gen": "npx gql-gen",
-    "pull": "ts-node ./pull"
+    "pull": "echo \"Pulling data from website \n\"; ts-node ./pull"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.6.2",
@@ -63,6 +63,7 @@
     "@types/seamless-immutable": "^7.1.10",
     "@types/yup": "^0.26.22",
     "babel-preset-expo": "^5.1.1",
+    "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.4.5",
