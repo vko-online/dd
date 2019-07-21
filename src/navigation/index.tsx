@@ -35,14 +35,14 @@ import Mealplanner from '../screens/mealplanner'
 //   initialRouteName: 'NewOrderTextInfo'
 // })
 
-const ProfileStack = createStackNavigator({
+const MainStack = createStackNavigator({
   Home,
   Profile: Home,
   Mealplanner,
   Reviews: Home,
   Balance: Home
 }, {
-  initialRouteName: 'Home',
+  initialRouteName: 'Mealplanner',
   defaultNavigationOptions: {
     header: ({ navigation, scene }) => {
       return (
@@ -68,9 +68,9 @@ const ProfileStack = createStackNavigator({
 })
 
 const DrawerNavigator = createDrawerNavigator({
-  ProfileStack
+  MainStack
 }, {
-  initialRouteName: 'ProfileStack',
+  initialRouteName: 'MainStack',
   contentComponent: (props) => <Drawer {...props} />
 })
 

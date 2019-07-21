@@ -3,7 +3,8 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native'
 import {
   Text,
@@ -13,37 +14,30 @@ import {
   Paragraph
 } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons'
-import { Scene } from 'view-on-steroids'
+import { Scene, Hpane } from 'view-on-steroids'
 import { NavigationScreenProp } from 'react-navigation'
-import { TabView, SceneMap, Route } from 'react-native-tab-view'
+import { TabView, SceneMap, Route, TabBar } from 'react-native-tab-view'
 import { get, noop } from 'lodash'
+// import SvgUri from 'react-native-svg-uri'
 import { mealplanItems, MealplanItem } from 'src/data'
+import { primary } from 'src/theme'
 
 import Modal from './create'
+import Block from './block'
 
-const FirstRoute = () => (
-  <Scene backgroundColor='#ff4081'><View /></Scene>
+const ScreenRoute = () => (
+  <ScrollView>
+    <Block />
+    <Block
+      title='Low carb: Dinner in 30 minutes or less'
+      description='Hearty homemade meals in under 30 minutes. Is that possible? Yes, this week’s meal plan offers delicious meals that you’ll have on the table in half an hour or less. Enjoy a variety of meals while staying below 35 grams of carbs per day.'
+    />
+    {/* <Block
+      title='Low carb: Easy cooking'
+      description='Don’t feel like much of a chef but still want to serve and have healthy homemade meals? This is the meal plan for you! Boost your confidence in the kitchen with these delicious and easy-to-make recipes that help you stay below 25 grams of carbs per day.'
+    /> */}
+  </ScrollView>
 )
-const SecondRoute = () => (
-  <Scene backgroundColor='#673ab7'><View /></Scene>
-)
-const colors = [
-  '#3A86FF',
-  '#E07A5F',
-  '#C3BEF7',
-  '#444444',
-  '#E2EB98',
-  '#F18701',
-  '#81B29A'
-]
-
-const typeColors = {
-  'Guide': '#6e86ae',
-  'Recipe collection': '#f086a4',
-  'Video': '#e73568',
-  'Success story': '#f3aec3'
-}
-
 interface Props {
   navigation: NavigationScreenProp<any, any>
 }
@@ -71,7 +65,8 @@ class Screen extends PureComponent<Props, State> {
     createVisible: false,
     routes: mealplanItems.map((v, i) => ({
       key: `${i}`,
-      title: v.title
+      title: v.title,
+      icon: v.image
     }))
   }
 
@@ -83,6 +78,21 @@ class Screen extends PureComponent<Props, State> {
 
   openCreate = () => this.setState({ createVisible: true })
   closeCreate = () => this.setState({ createVisible: false })
+  renderLabel = ({ route, focused, color }) => (
+    <Hpane>
+      {/* <SvgUri source={{ uri: route.icon }} width={25} height={25} fillAll='#fff' /> */}
+      <Text style={{ color: focused ? '#444' : '#666', margin: 8, fontFamily: 'diet-doctor-sans-medium' }}>
+        {route.title}
+      </Text>
+    </Hpane>
+  )
+  renderScene = ({ route }) => {
+    if (this.state.index !== 0) {
+      return <View />
+    }
+
+    return <ScreenRoute />
+  }
 
   render () {
     const { createVisible } = this.state
@@ -90,16 +100,25 @@ class Screen extends PureComponent<Props, State> {
       <Scene backgroundColor='#F3F2F9'>
         <TabView
           navigationState={this.state}
-          renderScene={SceneMap({
-            first: FirstRoute,
-            second: SecondRoute
-          })}
+          sceneContainerStyle={{ flex: 1 }}
+          lazy
+          removeClippedSubviews
+          renderScene={this.renderScene}
+          renderTabBar={props =>
+            <TabBar
+              {...props}
+              renderLabel={this.renderLabel}
+              scrollEnabled
+              style={{ backgroundColor: '#fff' }}
+              indicatorStyle={{ backgroundColor: primary }}
+            />
+          }
           onIndexChange={index => this.setState({ index })}
           initialLayout={{ width: Dimensions.get('window').width }}
         />
         <Modal
           onDismiss={this.closeCreate}
-          searchVisible={createVisible}
+          createVisible={createVisible}
         />
       </Scene>
     )
@@ -107,29 +126,9 @@ class Screen extends PureComponent<Props, State> {
 }
 
 const s = StyleSheet.create({
-  type: {
-    fontSize: 12,
-    fontFamily: 'diet-doctor-sans-medium',
-    color: '#fff'
-  },
-  list: {
-    paddingHorizontal: 10
-  },
-  subheading: {
-    fontSize: 14,
-    fontFamily: 'diet-doctor-sans-medium',
-    marginHorizontal: 10
-  },
-  card: {
-    width: 250,
-    margin: 5
-  },
   image: {
-    width: 250,
-    height: 150
-  },
-  content: {
-    marginTop: 30
+    width: 25,
+    height: 25
   }
 })
 
