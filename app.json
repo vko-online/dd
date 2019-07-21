@@ -2,7 +2,7 @@
   "expo": {
     "name": "diet doctor",
     "slug": "dd",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
