@@ -21,6 +21,7 @@ import { LOGOUT } from '../constants/actionTypes'
 import Auth from '../screens/auth'
 import Home from '../screens/home'
 import Intro from '../screens/intro'
+import Mealplanner from '../screens/mealplanner'
 // import Profile from '../screens/profile'
 // import Login from '../screens/login'
 // import Reviews from '../screens/reviews'
@@ -37,7 +38,7 @@ import Intro from '../screens/intro'
 const ProfileStack = createStackNavigator({
   Home,
   Profile: Home,
-  Stats: Home,
+  Mealplanner,
   Reviews: Home,
   Balance: Home
 }, {

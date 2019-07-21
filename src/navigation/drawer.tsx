@@ -67,7 +67,7 @@ class DrawerComponent extends PureComponent<Props, State> {
         {this.renderUser()}
         <Drawer.Section>
           <Drawer.Item active={routeName === 'MyFavorites'} label='My favorites' icon='favorite' onPress={() => navigation.navigate('MyFavorites')} />
-          <Drawer.Item active={routeName === 'MealPlanner'} label='Meal planner' icon='date-range' onPress={() => navigation.navigate('MealPlanner')} />
+          <Drawer.Item active={routeName === 'Mealplanner'} label='Meal planner' icon='date-range' onPress={() => navigation.navigate('Mealplanner')} />
           <Drawer.Item active={routeName === 'MyAccount'} label='My account' icon='account-circle' onPress={() => navigation.navigate('MyAccount')} />
         </Drawer.Section>
         <Drawer.Item label='Low carbo & keto' />
