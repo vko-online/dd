@@ -55,7 +55,8 @@ class Screen extends PureComponent<Props, State> {
           <Appbar.Content title='Diet Doctor' subtitle='Welcome back, Medet' />
           <View />
           <Appbar.Action icon='search' onPress={action} />
-          <Appbar.Action icon='add' />
+          <View />
+          {/* <Appbar.Action icon='add' /> */}
           {/* <Avatar.Image
             style={{ marginRight: 10 }}
             source={require('src/assets/images/avatar.jpeg')}
