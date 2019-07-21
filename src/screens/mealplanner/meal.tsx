@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Paragraph, Button, Caption, Title } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
-import { Hpane, Vpane } from 'view-on-steroids';
+import { Hpane, Vpane } from 'view-on-steroids'
 
 interface Props {
   title?: string
