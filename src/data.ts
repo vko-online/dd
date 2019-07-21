@@ -10,4 +10,10 @@ export interface Section {
   data: Item[]
 }
 
+export interface MealplanItem {
+  title: string
+  image: string
+}
+
 export const data: Section[] = require('src/_data.json')
+export const mealplanItems: MealplanItem[] = require('src/_mealplans.json')
