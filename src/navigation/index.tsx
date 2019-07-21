@@ -42,7 +42,7 @@ const MainStack = createStackNavigator({
   Reviews: Home,
   Balance: Home
 }, {
-  initialRouteName: 'Mealplanner',
+  initialRouteName: 'Home',
   defaultNavigationOptions: {
     header: ({ navigation, scene }) => {
       return (
