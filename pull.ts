@@ -38,6 +38,21 @@ x(
   const file = path.join(__dirname, 'src', '_data.json')
   fs.writeFile(file, JSON.stringify(items, null, 4), function (err) {
     if (err) throw err
-    console.log('Done')
+    console.log('Crawled posts')
+  })
+})
+
+x('https://www.dietdoctor.com/low-carb/meal-plans/all',
+'#menu-low-carb-meal-plans .menu-item',
+  [{
+    title: 'a@',
+    image: 'img@src'
+  }]
+)((err, data) => {
+  if (err) throw err
+  const file = path.join(__dirname, 'src', '_mealplans.json')
+  fs.writeFile(file, JSON.stringify(data, null, 4), function (err) {
+    if (err) throw err
+    console.log('Crawled mealplans')
   })
 })
