@@ -37,9 +37,9 @@ export const URL = `https://${REMOTE_HOST}` // set your comp's url here
 
 const config = {
   key: 'root',
-  version: 2,
+  version: 3,
   storage: ReduxStorage,
-  blacklist: ['nav', 'apollo'] // don't persist nav for now
+  blacklist: ['nav', 'apollo', 'intro', 'auth'] // don't persist nav for now
 }
 
 const reducer = persistCombineReducers<any>(config, {
